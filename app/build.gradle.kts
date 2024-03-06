@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
     id ("kotlin-parcelize")
     kotlin("kapt")
 }
@@ -58,10 +59,12 @@ dependencies {
     val hiltAndroid = "2.48"
     val coroutines = "1.7.1"
     val livedata = "2.7.0"
+    val splashscreen = "1.0.1"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
     // Integration Testing
     testImplementation("junit:junit:4.13.2")
@@ -95,6 +98,10 @@ dependencies {
 
     //livedata
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$livedata")
+
+    //Splash
+    implementation ("androidx.core:core-splashscreen:$splashscreen")
+
 
 
 }
