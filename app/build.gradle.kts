@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     id ("kotlin-parcelize")
+    id("com.google.devtools.ksp")
     kotlin("kapt")
 }
 
@@ -58,8 +59,6 @@ dependencies {
     val loggingInterceptor = "4.5.0"
     val hiltAndroid = "2.48"
     val coroutines = "1.7.1"
-    val livedata = "2.7.0"
-    val splashscreen = "1.0.1"
     val hiltNavigationCompose = "1.2.0"
 
     implementation("androidx.core:core-ktx:1.12.0")
@@ -94,17 +93,13 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationCompose")
     kapt("com.google.dagger:hilt-android-compiler:$hiltAndroid")
 
-
-
     //Coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
 
-    //livedata
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$livedata")
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
 
-    //Splash
-    implementation ("androidx.core:core-splashscreen:$splashscreen")
 
 
 

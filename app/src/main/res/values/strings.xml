@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Planet</string>
     <string name="planet_list">Planet List</string>
+    <string name="network_connection_error">Network Connection Error</string>
+    <string name="network_error_message">This page require network connection</string>
+    <string name="Retry">Retry</string>
+
 </resources>

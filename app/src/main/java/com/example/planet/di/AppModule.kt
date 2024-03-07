@@ -1,11 +1,17 @@
 package com.example.planet.di
 
+import android.content.Context
+import androidx.room.Room
+import com.example.planet.local.AppDatabase
+import com.example.planet.local.dao.PlanetDao
 import com.example.planet.network.AppApis
-import com.example.planet.respository.MyRepository
-import com.example.planet.respository.MyRepositoryImplementation
+import com.example.planet.network.NetworkChecker
+import com.example.planet.respository.MyApiRepository
+import com.example.planet.respository.MyApiRepositoryImplementation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -43,7 +49,28 @@ object AppModule {
     }
     @Provides
     @Singleton
-    fun provideMyRepository(api : AppApis) : MyRepository {
-        return MyRepositoryImplementation(api)
+    fun provideMyRepository(api : AppApis) : MyApiRepository {
+        return MyApiRepositoryImplementation(api)
     }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            AppDatabase::class.java,
+            "app_database"
+        ).build()
+    }
+    @Provides
+    @Singleton
+    fun provideDao(appDatabase: AppDatabase) : PlanetDao{
+        return appDatabase.planetDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkChecker(@ApplicationContext context: Context) : NetworkChecker = NetworkChecker(context)
+
+
 }

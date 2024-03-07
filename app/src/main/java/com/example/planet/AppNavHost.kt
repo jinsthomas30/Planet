@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.planet.network.NetworkDependentScreen
 import com.example.planet.ui.planetlist.PlanetListScreen
 import com.example.planet.ui.planetlist.PlanetListViewModel
 import com.example.planet.ui.splash.Splash
@@ -15,7 +16,6 @@ fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     startDestination: String = NavigationItem.SPLASH.route,
-
     ) {
     NavHost(
         modifier = modifier,
@@ -28,6 +28,7 @@ fun AppNavHost(
         composable(NavigationItem.PLANT_LIST.route) {
             val viewModel = hiltViewModel<PlanetListViewModel>()
             PlanetListScreen(navController,viewModel)
+
         }
     }
 }

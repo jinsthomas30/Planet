@@ -41,8 +41,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.planet.R
+import com.example.planet.network.NetworkState
+import com.example.planet.network.NetworkStateViewModel
 import com.example.planet.ui.planetlist.data.PlanetItem
 import kotlinx.coroutines.launch
 

@@ -4,9 +4,9 @@ import com.example.planet.network.AppApis
 import com.example.planet.ui.planetlist.data.PlanetItem
 import retrofit2.Response
 
-class MyRepositoryImplementation(
+class MyApiRepositoryImplementation(
     private val api : AppApis
-): MyRepository {
+): MyApiRepository {
     override suspend fun doNetworkCal(): Response<String> {
         TODO("Not yet implemented")
     }
