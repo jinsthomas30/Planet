@@ -62,7 +62,7 @@ fun PlanetListScreen(navController: NavHostController, viewModel: PlanetListView
 fun TopAppBar(navController: NavHostController, viewModel: PlanetListViewModel) {
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-    var backPressHandled by remember { mutableStateOf(false) }
+    val backPressHandled by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val activity = (LocalContext.current as? Activity)
     //Back press event

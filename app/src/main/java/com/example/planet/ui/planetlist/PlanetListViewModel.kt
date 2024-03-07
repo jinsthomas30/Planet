@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.planet.common.Constants.Companion.API_RESULT_OK
 import com.example.planet.respository.MyRepository
 import com.example.planet.ui.planetlist.data.PlanetItem
-import com.example.planet.ui.planetlist.data.PlanetItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
