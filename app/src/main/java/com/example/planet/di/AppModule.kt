@@ -1,11 +1,14 @@
 package com.example.planet.di
 
+import android.content.Context
 import com.example.planet.network.AppApis
+import com.example.planet.network.NetworkChecker
 import com.example.planet.respository.MyRepository
 import com.example.planet.respository.MyRepositoryImplementation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -46,4 +49,10 @@ object AppModule {
     fun provideMyRepository(api : AppApis) : MyRepository {
         return MyRepositoryImplementation(api)
     }
+
+    @Provides
+    @Singleton
+    fun provideNetworkChecker(@ApplicationContext context: Context) : NetworkChecker = NetworkChecker(context)
+
+
 }
