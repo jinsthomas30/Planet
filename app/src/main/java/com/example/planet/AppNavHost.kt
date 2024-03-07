@@ -2,10 +2,12 @@ package com.example.planet
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.planet.ui.planetlist.PlanetListScreen
+import com.example.planet.ui.planetlist.PlanetListViewModel
 import com.example.planet.ui.splash.Splash
 
 @Composable
@@ -24,7 +26,8 @@ fun AppNavHost(
             Splash(navController, modifier = modifier)
         }
         composable(NavigationItem.PLANT_LIST.route) {
-            PlanetListScreen(navController)
+            val viewModel = hiltViewModel<PlanetListViewModel>()
+            PlanetListScreen(navController,viewModel)
         }
     }
 }

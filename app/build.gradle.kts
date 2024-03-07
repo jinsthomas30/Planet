@@ -60,6 +60,7 @@ dependencies {
     val coroutines = "1.7.1"
     val livedata = "2.7.0"
     val splashscreen = "1.0.1"
+    val hiltNavigationCompose = "1.2.0"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -90,7 +91,10 @@ dependencies {
 
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:$hiltAndroid")
+    implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationCompose")
     kapt("com.google.dagger:hilt-android-compiler:$hiltAndroid")
+
+
 
     //Coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
