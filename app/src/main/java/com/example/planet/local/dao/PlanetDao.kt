@@ -5,13 +5,14 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.planet.ui.planetlist.data.PlanetItem
+import com.example.planet.ui.planetlist.data.PlanetEntity
+
 @Dao
 interface PlanetDao {
-    @Query("SELECT * FROM planet")
-    suspend fun getAllPlanet() : List<PlanetItem>
+    @Query("SELECT * FROM planetEntity")
+    suspend fun getAllPlanet() : List<PlanetEntity>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPlanet(planet : List<PlanetItem>)
+    suspend fun insertPlanet(planet : List<PlanetEntity>)
     @Delete
-    suspend fun deletePlanet(planet : PlanetItem)
+    suspend fun deletePlanet(planet : PlanetEntity)
 }
