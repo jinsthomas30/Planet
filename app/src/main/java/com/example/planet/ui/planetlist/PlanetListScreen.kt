@@ -3,8 +3,9 @@ package com.example.planet.ui.planetlist
 import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -30,7 +31,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,17 +41,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.planet.NavigationItem
 import com.example.planet.R
-import com.example.planet.network.NetworkState
-import com.example.planet.network.NetworkStateViewModel
-import com.example.planet.ui.planetlist.data.PlanetItem
+import com.example.planet.network.connectivityState
+import com.example.planet.ui.planetlist.data.PlanetEntity
 import kotlinx.coroutines.launch
 
 @Composable
 fun PlanetListScreen(navController: NavHostController, viewModel: PlanetListViewModel) {
-
+   // val connection by connectivityState()
+    // val isConnected = connection === ConnectionState.Available
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -106,13 +106,17 @@ fun TopAppBar(navController: NavHostController, viewModel: PlanetListViewModel) 
             )
         },
     ) { innerPadding ->
-        ScrollContent(innerPadding, viewModel)
+        ScrollContent(innerPadding, viewModel, navController)
     }
 
 }
 
 @Composable
-fun ScrollContent(innerPadding: PaddingValues, viewModel: PlanetListViewModel) {
+fun ScrollContent(
+    innerPadding: PaddingValues,
+    viewModel: PlanetListViewModel,
+    navController: NavHostController
+) {
     IndeterminateCircularIndicator(viewModel)
     val planets by viewModel.planetList.collectAsState()
     LazyColumn(
@@ -120,7 +124,7 @@ fun ScrollContent(innerPadding: PaddingValues, viewModel: PlanetListViewModel) {
             .fillMaxSize(),
         contentPadding = innerPadding,
     ) {
-        items(planets) { planet: PlanetItem ->
+        items(planets) { planetItem: PlanetEntity ->
             ElevatedCard(
                 colors = CardDefaults.cardColors(
                     containerColor = Color.White,
@@ -128,17 +132,23 @@ fun ScrollContent(innerPadding: PaddingValues, viewModel: PlanetListViewModel) {
                 shape = RoundedCornerShape(5.dp),
                 modifier = Modifier
                     .padding(top = 8.dp, start = 8.dp, end = 8.dp)
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                onClick = {
+                    navController.navigate(NavigationItem.DETAILS.route + "/${planetItem.uid}") {
+                        popUpTo(NavigationItem.PLANT_LIST.route)
+                    }
+                }
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(text = planet.title)
+                Row(modifier = Modifier.padding(16.dp)) {
+                    Text(text = planetItem.name)
                 }
             }
-
-
+            if (planetItem == planets.last()) Spacer(modifier = Modifier.padding(bottom = 8.dp))
         }
+
     }
 }
+
 @Composable
 fun IndeterminateCircularIndicator(viewModel: PlanetListViewModel) {
     val loading by viewModel.isLoading.collectAsState()

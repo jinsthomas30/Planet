@@ -5,7 +5,6 @@ import androidx.room.Room
 import com.example.planet.local.AppDatabase
 import com.example.planet.local.dao.PlanetDao
 import com.example.planet.network.AppApis
-import com.example.planet.network.NetworkChecker
 import com.example.planet.respository.MyApiRepository
 import com.example.planet.respository.MyApiRepositoryImplementation
 import dagger.Module
@@ -21,10 +20,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    private const val BASE_URL =  "https://fakestoreapi.com/"
+    private const val BASE_URL =  "https://www.swapi.tech/api/"
     @Provides
     @Singleton //marks the scope of the dependency. i.e will have the single instance through out
     fun provideMyApi(): AppApis {
@@ -38,6 +38,8 @@ object AppModule {
             .retryOnConnectionFailure(true)
             .addInterceptor(loggingInterceptor)
             .build()
+
+
 
         return  Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -67,10 +69,6 @@ object AppModule {
     fun provideDao(appDatabase: AppDatabase) : PlanetDao{
         return appDatabase.planetDao()
     }
-
-    @Provides
-    @Singleton
-    fun provideNetworkChecker(@ApplicationContext context: Context) : NetworkChecker = NetworkChecker(context)
 
 
 }

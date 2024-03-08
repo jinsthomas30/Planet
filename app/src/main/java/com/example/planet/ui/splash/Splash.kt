@@ -29,7 +29,9 @@ fun Splash(navController: NavHostController,modifier: Modifier) {
     coroutineScope.launch {
         delay(3000)
         navController.navigate(NavigationItem.PLANT_LIST.route){
-            navController.popBackStack()
+            popUpTo(NavigationItem.PLANT_LIST.route) {
+                inclusive = true
+            }
         }
     }
 
