@@ -50,7 +50,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun PlanetListScreen(navController: NavHostController, viewModel: PlanetListViewModel) {
-    val connection by connectivityState()
+   // val connection by connectivityState()
     // val isConnected = connection === ConnectionState.Available
     Surface(
         modifier = Modifier.fillMaxSize(),

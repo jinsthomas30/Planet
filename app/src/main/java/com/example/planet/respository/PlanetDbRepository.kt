@@ -13,7 +13,4 @@ class PlanetDbRepository @Inject constructor (private val planetDao: PlanetDao) 
         return planetDao.insertPlanet(planet)
     }
 
-    suspend fun deleteTask(planet: PlanetEntity) {
-        return planetDao.deletePlanet(planet)
-    }
 }
