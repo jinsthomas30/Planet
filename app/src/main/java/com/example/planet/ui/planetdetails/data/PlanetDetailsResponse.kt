@@ -22,7 +22,6 @@ data class Result(
     @SerializedName("uid")
     val uid: String?
 )
-@Entity(tableName = "planetDtEntity")
 data class Properties(
     @SerializedName("climate")
     val climate: String?,
