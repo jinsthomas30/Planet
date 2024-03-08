@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.planet.NavigationItem
 import com.example.planet.R
-import com.example.planet.network.connectivityState
 import com.example.planet.ui.planetlist.data.PlanetEntity
 import kotlinx.coroutines.launch
 
