@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
@@ -41,15 +43,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.planet.NavigationItem
 import com.example.planet.R
+import com.example.planet.ui.planetdetails.data.MyDialog
 import com.example.planet.ui.planetlist.data.PlanetEntity
+import com.example.planet.ui.planetlist.viewModel.PlanetListViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun PlanetListScreen(navController: NavHostController, viewModel: PlanetListViewModel) {
-   // val connection by connectivityState()
+    // val connection by connectivityState()
     // val isConnected = connection === ConnectionState.Available
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -102,6 +107,12 @@ fun TopAppBar(navController: NavHostController, viewModel: PlanetListViewModel) 
                     }
                 },
                 scrollBehavior = scrollBehavior,
+            )
+            // AlertDialog
+            val state by viewModel.openDialog.collectAsState()
+            DialogView(
+                state = state,
+                onDismiss = viewModel::onDismiss, activity!!
             )
         },
     ) { innerPadding ->
@@ -163,4 +174,30 @@ fun IndeterminateCircularIndicator(viewModel: PlanetListViewModel) {
         )
     }
 
+}
+
+@Composable
+fun DialogView(
+    state: MyDialog,
+    onDismiss: () -> Unit, activity: Activity
+) {
+    if (state.showDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                onDismiss
+            },
+            title = {
+                Text(stringResource(id = R.string.alert_msg), fontSize = 16.sp)
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        activity.finish()
+                    }) {
+                    Text("Ok", fontSize = 16.sp)
+                }
+            }
+        )
+
+    }
 }

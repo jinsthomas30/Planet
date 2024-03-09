@@ -11,9 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.planet.ui.planetdetails.PlanetDetailsScreen
-import com.example.planet.ui.planetdetails.PlanetDetailsViewModel
+import com.example.planet.ui.planetdetails.viewModel.PlanetDetailsViewModel
 import com.example.planet.ui.planetlist.PlanetListScreen
-import com.example.planet.ui.planetlist.PlanetListViewModel
+import com.example.planet.ui.planetlist.viewModel.PlanetListViewModel
 import com.example.planet.ui.splash.Splash
 
 @Composable

@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -35,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.planet.R
+import com.example.planet.ui.planetdetails.data.MyDialog
+import com.example.planet.ui.planetdetails.viewModel.PlanetDetailsViewModel
 
 @Composable
 fun PlanetDetailsScreen(
@@ -42,14 +46,18 @@ fun PlanetDetailsScreen(
     id: String,
     mPlanetDetailsViewModel: PlanetDetailsViewModel
 ) {
-    mPlanetDetailsViewModel.fetchPlanetList(id)
-
+    mPlanetDetailsViewModel.fetchPlanetDt(id)
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         TopAppBar(navController, mPlanetDetailsViewModel)
         IndeterminateCircularIndicator(mPlanetDetailsViewModel)
+        val state by mPlanetDetailsViewModel.openDialog.collectAsState()
+        AlertDialogView(
+            state = state,
+            onDismiss = mPlanetDetailsViewModel::onDismiss, navController
+        )
     }
 }
 
@@ -259,5 +267,30 @@ fun IndeterminateCircularIndicator(viewModel: PlanetDetailsViewModel) {
             trackColor = MaterialTheme.colorScheme.surfaceVariant,
         )
     }
+}
 
+@Composable
+fun AlertDialogView(
+    state: MyDialog,
+    onDismiss: () -> Unit, navController: NavHostController
+) {
+    if (state.showDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                onDismiss
+            },
+            title = {
+                Text(stringResource(id = R.string.alert_msg), fontSize = 16.sp)
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        navController.popBackStack()
+                    }) {
+                    Text("Ok", fontSize = 16.sp)
+                }
+            }
+        )
+
+    }
 }

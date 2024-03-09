@@ -1,5 +1,7 @@
 package com.example.planet.ui.planetdetails.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class PlanetDetailsResponse(
@@ -17,11 +19,16 @@ data class Result(
     @SerializedName("description")
     val description: String?,
     @SerializedName("properties")
-    val properties: Properties?,
+    val properties: PlanetDtEntity?,
     @SerializedName("uid")
     val uid: String?
 )
-data class Properties(
+
+@Entity(tableName = "planetDtEntity")
+data class PlanetDtEntity(
+    @PrimaryKey
+    @SerializedName("uid")
+    var uid: String,
     @SerializedName("climate")
     val climate: String?,
     @SerializedName("created")
