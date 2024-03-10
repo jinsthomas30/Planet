@@ -27,7 +27,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -39,6 +38,7 @@ import androidx.navigation.NavHostController
 import com.example.planet.R
 import com.example.planet.ui.planetdetails.data.MyDialog
 import com.example.planet.ui.planetdetails.viewModel.PlanetDetailsViewModel
+
 
 @Composable
 fun PlanetDetailsScreen(
@@ -53,11 +53,10 @@ fun PlanetDetailsScreen(
     ) {
         TopAppBar(navController, mPlanetDetailsViewModel)
         IndeterminateCircularIndicator(mPlanetDetailsViewModel)
-        val state by mPlanetDetailsViewModel.openDialog.collectAsState()
-        AlertDialogView(
-            state = state,
-            onDismiss = mPlanetDetailsViewModel::onDismiss, navController
-        )
+        val dialogState by mPlanetDetailsViewModel.openDialog.collectAsState()
+        DialogView(
+            dialogState = dialogState,
+            onDismiss = mPlanetDetailsViewModel::onDismiss, navController)
     }
 }
 
@@ -68,24 +67,23 @@ fun TopAppBar(navController: NavHostController, mPlanetDetailsViewModel: PlanetD
         topBar = {
             androidx.compose.material3.TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Black,
-                    titleContentColor = Color.White,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
                 title = {
                     Text(
-                        stringResource(R.string.planet_details_page),
+                        stringResource(R.string.planet_list),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = {
-                        navController.popBackStack()
-                    }) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.baseline_arrow_back_24),
                             contentDescription = "back arrow",
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },
@@ -270,15 +268,13 @@ fun IndeterminateCircularIndicator(viewModel: PlanetDetailsViewModel) {
 }
 
 @Composable
-fun AlertDialogView(
-    state: MyDialog,
+fun DialogView(
+    dialogState: MyDialog,
     onDismiss: () -> Unit, navController: NavHostController
 ) {
-    if (state.showDialog) {
+    if (dialogState.showDialog) {
         AlertDialog(
-            onDismissRequest = {
-                onDismiss
-            },
+            onDismissRequest = { onDismiss() },
             title = {
                 Text(stringResource(id = R.string.alert_msg), fontSize = 16.sp)
             },
@@ -287,10 +283,9 @@ fun AlertDialogView(
                     onClick = {
                         navController.popBackStack()
                     }) {
-                    Text("Ok", fontSize = 16.sp)
+                    Text(stringResource(id = R.string.ok), fontSize = 16.sp)
                 }
             }
         )
-
     }
 }

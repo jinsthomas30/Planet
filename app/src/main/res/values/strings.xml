@@ -15,7 +15,8 @@
     <string name="surface_water">Surface water</string>
     <string name="created">Created</string>
     <string name="edited">Edited</string>
-    <string name="alert_msg">Details of the planet are not available offline. Please attempt to check your internet access.</string>
+    <string name="ok">Ok</string>
+    <string name="alert_msg">Data not found. Please try again later.</string>
 
 
 </resources>

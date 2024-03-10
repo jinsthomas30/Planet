@@ -32,7 +32,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,12 +49,9 @@ import com.example.planet.R
 import com.example.planet.ui.planetdetails.data.MyDialog
 import com.example.planet.ui.planetlist.data.PlanetEntity
 import com.example.planet.ui.planetlist.viewModel.PlanetListViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun PlanetListScreen(navController: NavHostController, viewModel: PlanetListViewModel) {
-    // val connection by connectivityState()
-    // val isConnected = connection === ConnectionState.Available
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -70,14 +66,10 @@ fun TopAppBar(navController: NavHostController, viewModel: PlanetListViewModel) 
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val backPressHandled by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
     val activity = (LocalContext.current as? Activity)
-    //Back press event
+
     BackHandler(enabled = !backPressHandled) {
-        println("back pressed")
-        coroutineScope.launch {
-            activity?.finish()
-        }
+        activity?.finish()
     }
 
     Scaffold(
@@ -85,35 +77,31 @@ fun TopAppBar(navController: NavHostController, viewModel: PlanetListViewModel) 
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Black,
-                    titleContentColor = Color.White,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
                 title = {
                     Text(
                         stringResource(R.string.planet_list),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = {
-                        activity?.finish()
-                    }) {
+                    IconButton(onClick = { activity?.finish() }) {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.baseline_arrow_back_24),
                             contentDescription = "back arrow",
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },
                 scrollBehavior = scrollBehavior,
             )
-            // AlertDialog
-            val state by viewModel.openDialog.collectAsState()
-            DialogView(
-                state = state,
-                onDismiss = viewModel::onDismiss, activity!!
-            )
+
+            val dialogState by viewModel.openDialog.collectAsState()
+            DialogView(dialogState, viewModel::onDismiss, activity!!)
         },
     ) { innerPadding ->
         ScrollContent(innerPadding, viewModel, navController)
@@ -178,14 +166,13 @@ fun IndeterminateCircularIndicator(viewModel: PlanetListViewModel) {
 
 @Composable
 fun DialogView(
-    state: MyDialog,
-    onDismiss: () -> Unit, activity: Activity
+    dialogState: MyDialog,
+    onDismiss: () -> Unit,
+    activity: Activity
 ) {
-    if (state.showDialog) {
+    if (dialogState.showDialog) {
         AlertDialog(
-            onDismissRequest = {
-                onDismiss
-            },
+            onDismissRequest = { onDismiss() },
             title = {
                 Text(stringResource(id = R.string.alert_msg), fontSize = 16.sp)
             },
@@ -194,10 +181,9 @@ fun DialogView(
                     onClick = {
                         activity.finish()
                     }) {
-                    Text("Ok", fontSize = 16.sp)
+                    Text(stringResource(id = R.string.ok), fontSize = 16.sp)
                 }
             }
         )
-
     }
 }
