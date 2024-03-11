@@ -16,7 +16,7 @@
     <string name="created">Created</string>
     <string name="edited">Edited</string>
     <string name="ok">Ok</string>
-    <string name="alert_msg">Data not found. Please try again later.</string>
+    <string name="alert_msg">Data not found. Please check internet connectivity.</string>
 
 
 </resources>
