@@ -30,10 +30,10 @@ class PlanetListViewModel @Inject constructor(
     val openDialog = _openDialog.asStateFlow()
 
     init {
-        fetchPlanetList()
+       // fetchPlanetList()
     }
 
-    private fun fetchPlanetList() {
+     fun fetchPlanetList() {
         viewModelScope.launch {
             try {
                 repository.planetList().let {

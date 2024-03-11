@@ -11,6 +11,8 @@ android {
     namespace = "com.example.planet"
     compileSdk = 34
 
+    testOptions { packagingOptions { jniLibs { useLegacyPackaging = true } } }
+
     defaultConfig {
         applicationId = "com.example.planet"
         minSdk = 29
@@ -49,6 +51,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
         }
     }
 }
@@ -60,6 +64,7 @@ dependencies {
     val hiltAndroid = "2.48"
     val coroutines = "1.7.1"
     val hiltNavigationCompose = "1.2.0"
+    val mockAndroid = "1.13.8"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -97,10 +102,12 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
 
+    //Room
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
 
-
+    //Unit test cases
+    androidTestImplementation ("io.mockk:mockk-android:$mockAndroid")
 
 
 }

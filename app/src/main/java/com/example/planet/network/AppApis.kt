@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface AppApis {
-    @GET("planets")
+    @GET("planets?page=1&limit=60")
     suspend fun fetchPlanetList(): Response<PlanetResponse>
 
     @GET("planets/{id}")
