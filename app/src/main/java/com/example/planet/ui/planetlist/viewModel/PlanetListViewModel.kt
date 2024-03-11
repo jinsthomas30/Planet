@@ -64,7 +64,7 @@ class PlanetListViewModel @Inject constructor(
         }
     }
 
-    fun onShowDialog() {
+    private fun onShowDialog() {
         _openDialog.update { state ->
             state.copy(showDialog = true)
         }

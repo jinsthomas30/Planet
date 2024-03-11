@@ -33,7 +33,7 @@ class PlanetDetailsViewModel @Inject constructor(
     fun fetchPlanetDt(uid: String) {
         viewModelScope.launch {
             try {
-                repository.planetDetails(uid).let {
+                repository.planetDetails(uid).let { it ->
                     _isLoading.value = false
                     if (it.code() == Constants.API_RESULT_OK) {
                         if (it.body()?.message == Constants.MESSAGE_OK) {
@@ -61,7 +61,7 @@ class PlanetDetailsViewModel @Inject constructor(
         }
     }
 
-    fun onShowDialog() {
+    private fun onShowDialog() {
         _openDialog.update { state ->
             state.copy(showDialog = true)
         }

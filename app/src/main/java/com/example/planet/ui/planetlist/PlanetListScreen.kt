@@ -171,7 +171,7 @@ fun DialogView(
 ) {
     if (dialogState.showDialog) {
         AlertDialog(
-            onDismissRequest = { onDismiss() },
+            onDismissRequest = { onDismiss },
             title = {
                 Text(stringResource(id = R.string.alert_msg), fontSize = 16.sp)
             },
