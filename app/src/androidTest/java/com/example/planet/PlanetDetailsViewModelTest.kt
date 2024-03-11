@@ -6,14 +6,11 @@ import com.example.planet.ui.planetdetails.data.PlanetDetailsResponse
 import com.example.planet.ui.planetdetails.data.PlanetDtEntity
 import com.example.planet.ui.planetdetails.data.Result
 import com.example.planet.ui.planetdetails.viewModel.PlanetDetailsViewModel
-import com.example.planet.ui.planetlist.data.PlanetResponse
-import com.example.planet.ui.planetlist.viewModel.PlanetListViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.unmockkAll
-import junit.framework.TestCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
