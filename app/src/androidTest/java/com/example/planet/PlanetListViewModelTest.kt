@@ -49,7 +49,7 @@ class PlanetListViewModelTest {
     }
 
     @Test
-    fun `test_fetching_planet_list_successfully`() = runBlocking {
+    fun test_fetching_planet_list_successfully() = runBlocking {
         // Given
         coEvery { repository.planetList() } returns Response.success(planetResponse)
         coEvery { planetDbRepository.getAllPlanet() } returns listOf(planetEntity)
@@ -71,7 +71,7 @@ class PlanetListViewModelTest {
     }
 
     @Test
-    fun `test_fetching_planet_list_with_error`() = runBlocking {
+    fun test_fetching_planet_list_with_error() = runBlocking {
         // Given
         coEvery { repository.planetList() } throws Exception()
         coEvery { planetDbRepository.getAllPlanet() } returns emptyList()

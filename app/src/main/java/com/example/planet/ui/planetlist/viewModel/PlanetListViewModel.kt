@@ -30,7 +30,7 @@ class PlanetListViewModel @Inject constructor(
     val openDialog = _openDialog.asStateFlow()
 
     init {
-       // fetchPlanetList()
+        fetchPlanetList()
     }
 
      fun fetchPlanetList() {
