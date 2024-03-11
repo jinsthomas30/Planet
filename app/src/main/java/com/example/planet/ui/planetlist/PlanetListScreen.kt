@@ -84,8 +84,7 @@ fun TopAppBar(navController: NavHostController, viewModel: PlanetListViewModel) 
                     Text(
                         stringResource(R.string.planet_list),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        color = MaterialTheme.colorScheme.onPrimary
+                        overflow = TextOverflow.Ellipsis
                     )
                 },
                 navigationIcon = {
