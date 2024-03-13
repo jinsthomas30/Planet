@@ -102,7 +102,7 @@ fun TopAppBar(navController: NavHostController) {
 
         },
     ) { innerPadding ->
-        ScrollContent(innerPadding, navController, activity!!)
+        activity?.let { ScrollContent(innerPadding, navController, it) }
     }
 
 }
@@ -115,7 +115,7 @@ fun ScrollContent(
 ) {
     val viewModel: PlanetListViewModel = hiltViewModel()
     val dialogState by viewModel.openDialog.collectAsState()
-    DialogView(dialogState, viewModel::onDismiss, activity!!)
+    DialogView(dialogState, viewModel::onDismiss, activity)
     IndeterminateCircularIndicator(viewModel)
     val planets by viewModel.planetList.collectAsState()
 
