@@ -65,7 +65,7 @@ fun PlanetListScreen(navController: NavHostController) {
 @Composable
 fun TopAppBar(navController: NavHostController) {
     val scrollBehavior =
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+        TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val backPressHandled by remember { mutableStateOf(false) }
     val activity = (LocalContext.current as? Activity)
 
@@ -97,7 +97,6 @@ fun TopAppBar(navController: NavHostController) {
                         )
                     }
                 },
-                scrollBehavior = scrollBehavior,
             )
 
         },

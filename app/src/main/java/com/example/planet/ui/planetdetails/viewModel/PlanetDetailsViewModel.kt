@@ -38,7 +38,7 @@ class PlanetDetailsViewModel @Inject constructor(
                     _isLoading.value = false
                     if (it.code() == Constants.API_RESULT_OK) {
                         if (it.body()?.message == Constants.MESSAGE_OK) {
-                            val planetDt=it.body()?.result!!.properties!!.also { it.uid=uid }
+                            val planetDt= it.body()?.result?.properties!!.also { it.uid=uid }
                             planetDbRepository.insertPlanetDt(planetDt)
                             getPlanetDtFromDb(uid)
                         }

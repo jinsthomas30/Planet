@@ -34,14 +34,14 @@ class PlanetListViewModel @Inject constructor(
         fetchPlanetList()
     }
 
-     fun fetchPlanetList() {
+    fun fetchPlanetList() {
         viewModelScope.launch(Dispatchers.Default) {
             try {
                 repository.planetList().let {
                     _isLoading.value = false
                     if (it.code() == API_RESULT_OK) {
                         if (it.body()?.message == MESSAGE_OK) {
-                            planetDbRepository.insertPlanetList(it.body()?.results!!)
+                            it.body()?.results?.let { it1 -> planetDbRepository.insertPlanetList(it1) }
                             fetchDataFromDb()
                         }
                     }
