@@ -270,7 +270,7 @@ fun IndeterminateCircularIndicator(viewModel: PlanetDetailsViewModel) {
 @Composable
 fun DialogView(
     dialogState: MyDialog,
-    onDismiss: () -> Unit, navController: NavHostController
+    navController: NavHostController
 ) {
     if (dialogState.showDialog) {
         AlertDialog(

@@ -169,7 +169,6 @@ fun IndeterminateCircularIndicator(viewModel: PlanetListViewModel) {
 @Composable
 fun DialogView(
     dialogState: MyDialog,
-    onDismiss: () -> Unit,
     activity: Activity
 ) {
     if (dialogState.showDialog) {
