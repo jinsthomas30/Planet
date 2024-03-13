@@ -112,7 +112,7 @@ fun DetailsContent(innerPadding: PaddingValues, mPlanetDetailsViewModel: PlanetD
         ) {
             Row {
                 Text(
-                    text = planetDetails.name.toString(),
+                    text = planetDetails?.name.toString(),
                     fontSize = 24.sp,
                     fontStyle = FontStyle.Italic
                 )
@@ -132,7 +132,7 @@ fun DetailsContent(innerPadding: PaddingValues, mPlanetDetailsViewModel: PlanetD
                         )
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = planetDetails.diameter.toString()
+                            text = planetDetails?.diameter.toString()
                         )
                     }
                 }
@@ -147,7 +147,7 @@ fun DetailsContent(innerPadding: PaddingValues, mPlanetDetailsViewModel: PlanetD
                         )
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = planetDetails.rotation_period.toString()
+                            text = planetDetails?.rotation_period.toString()
                         )
                     }
                 }
@@ -162,7 +162,7 @@ fun DetailsContent(innerPadding: PaddingValues, mPlanetDetailsViewModel: PlanetD
                         )
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = planetDetails.orbital_period.toString()
+                            text = planetDetails?.orbital_period.toString()
                         )
                     }
                 }
@@ -177,7 +177,7 @@ fun DetailsContent(innerPadding: PaddingValues, mPlanetDetailsViewModel: PlanetD
                         )
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = planetDetails.gravity.toString()
+                            text = planetDetails?.gravity.toString()
                         )
                     }
                 }
@@ -192,7 +192,7 @@ fun DetailsContent(innerPadding: PaddingValues, mPlanetDetailsViewModel: PlanetD
                         )
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = planetDetails.population.toString()
+                            text = planetDetails?.population.toString()
                         )
                     }
                 }
@@ -207,7 +207,7 @@ fun DetailsContent(innerPadding: PaddingValues, mPlanetDetailsViewModel: PlanetD
                         )
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = planetDetails.climate.toString()
+                            text = planetDetails?.climate.toString()
                         )
                     }
                 }
@@ -222,7 +222,7 @@ fun DetailsContent(innerPadding: PaddingValues, mPlanetDetailsViewModel: PlanetD
                         )
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = planetDetails.terrain.toString()
+                            text = planetDetails?.terrain.toString()
                         )
                     }
                 }
@@ -238,7 +238,7 @@ fun DetailsContent(innerPadding: PaddingValues, mPlanetDetailsViewModel: PlanetD
                         )
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = planetDetails.surface_water.toString()
+                            text = planetDetails?.surface_water.toString()
                         )
                     }
                 }

@@ -43,6 +43,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.planet.NavigationItem
 import com.example.planet.R
@@ -51,18 +52,18 @@ import com.example.planet.ui.planetlist.data.PlanetEntity
 import com.example.planet.ui.planetlist.viewModel.PlanetListViewModel
 
 @Composable
-fun PlanetListScreen(navController: NavHostController, viewModel: PlanetListViewModel) {
+fun PlanetListScreen(navController: NavHostController) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        TopAppBar(navController, viewModel)
+        TopAppBar(navController)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBar(navController: NavHostController, viewModel: PlanetListViewModel) {
+fun TopAppBar(navController: NavHostController) {
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val backPressHandled by remember { mutableStateOf(false) }
@@ -99,11 +100,9 @@ fun TopAppBar(navController: NavHostController, viewModel: PlanetListViewModel) 
                 scrollBehavior = scrollBehavior,
             )
 
-            val dialogState by viewModel.openDialog.collectAsState()
-            DialogView(dialogState, viewModel::onDismiss, activity!!)
         },
     ) { innerPadding ->
-        ScrollContent(innerPadding, viewModel, navController)
+        ScrollContent(innerPadding, navController, activity!!)
     }
 
 }
@@ -111,11 +110,15 @@ fun TopAppBar(navController: NavHostController, viewModel: PlanetListViewModel) 
 @Composable
 fun ScrollContent(
     innerPadding: PaddingValues,
-    viewModel: PlanetListViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    activity:Activity
 ) {
+    val viewModel: PlanetListViewModel = hiltViewModel()
+    val dialogState by viewModel.openDialog.collectAsState()
+    DialogView(dialogState, viewModel::onDismiss, activity!!)
     IndeterminateCircularIndicator(viewModel)
     val planets by viewModel.planetList.collectAsState()
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),

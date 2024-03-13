@@ -8,6 +8,7 @@ import com.example.planet.respository.PlanetDbRepository
 import com.example.planet.ui.planetdetails.data.MyDialog
 import com.example.planet.ui.planetdetails.data.PlanetDtEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -27,11 +28,11 @@ class PlanetDetailsViewModel @Inject constructor(
     private val _openDialog = MutableStateFlow(MyDialog(showDialog = false))
     val openDialog = _openDialog.asStateFlow()
 
-    private val _planetDetails = MutableStateFlow(PlanetDtEntity("", "", "", "", "", "", "", "", "", "", "", "", ""))
-    val planetDetails: MutableStateFlow<PlanetDtEntity> get() = _planetDetails
+    private val _planetDetails = MutableStateFlow<PlanetDtEntity?>(null)
+    val planetDetails: MutableStateFlow<PlanetDtEntity?> get() = _planetDetails
 
     fun fetchPlanetDt(uid: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             try {
                 repository.planetDetails(uid).let { it ->
                     _isLoading.value = false
@@ -51,7 +52,7 @@ class PlanetDetailsViewModel @Inject constructor(
 
     }
     private fun getPlanetDtFromDb(uid: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
            val data= planetDbRepository.getPlanetDt(uid)
             if(data!=null){
                 _planetDetails.value =data

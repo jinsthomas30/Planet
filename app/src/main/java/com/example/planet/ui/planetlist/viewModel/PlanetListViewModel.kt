@@ -9,6 +9,7 @@ import com.example.planet.respository.PlanetDbRepository
 import com.example.planet.ui.planetdetails.data.MyDialog
 import com.example.planet.ui.planetlist.data.PlanetEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -34,7 +35,7 @@ class PlanetListViewModel @Inject constructor(
     }
 
      fun fetchPlanetList() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             try {
                 repository.planetList().let {
                     _isLoading.value = false
@@ -53,7 +54,7 @@ class PlanetListViewModel @Inject constructor(
     }
 
     private fun fetchDataFromDb() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             val data = planetDbRepository.getAllPlanet()
             if (data.isNotEmpty()) {
                 _planetList.value = data

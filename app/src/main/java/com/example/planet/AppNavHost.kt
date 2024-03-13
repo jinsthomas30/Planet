@@ -31,8 +31,7 @@ fun AppNavHost(
             Splash(navController, modifier = modifier)
         }
         composable(NavigationItem.PLANT_LIST.route) {
-            val viewModel = hiltViewModel<PlanetListViewModel>()
-            PlanetListScreen(navController,viewModel)
+            PlanetListScreen(navController)
 
         }
         composable(
