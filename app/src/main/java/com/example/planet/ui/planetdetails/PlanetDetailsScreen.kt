@@ -30,10 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.planet.R
-import com.example.planet.network.ConnectionState
-import com.example.planet.ui.components.ConnectivityStatus
 import com.example.planet.ui.components.DialogView
 import com.example.planet.ui.components.IndeterminateCircularIndicator
+import com.example.planet.ui.components.connectivityStatus
 import com.example.planet.ui.planetdetails.data.PlanetDtEntity
 import com.example.planet.ui.planetdetails.viewModel.PlanetDetailsViewModel
 
@@ -85,7 +84,7 @@ fun DetailsPage(navController: NavHostController,id: String) {
         val planetDetails by planetDetailsViewModel.planetDetails.collectAsState()
         val dialogState by planetDetailsViewModel.dialogState.collectAsState()
         val loaderState by planetDetailsViewModel.isLoading.collectAsState()
-        if(ConnectivityStatus()){
+        if(connectivityStatus()){
             LaunchedEffect(Unit) {
                 planetDetailsViewModel.fetchPlanetDt(id)
             }

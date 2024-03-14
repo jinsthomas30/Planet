@@ -8,7 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @Composable
-fun ConnectivityStatus():Boolean {
+fun connectivityStatus():Boolean {
     val connection by connectivityState()
     val isConnected = connection === ConnectionState.Available
     return if (isConnected) {

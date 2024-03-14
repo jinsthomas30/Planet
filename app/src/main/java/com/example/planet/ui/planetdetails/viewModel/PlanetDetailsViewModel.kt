@@ -78,12 +78,6 @@ class PlanetDetailsViewModel @Inject constructor(
         _dialogState.value = DialogState.Hidden
     }
 
-    fun showLoader() {
-        _isLoading.update { state ->
-            state.copy(isLoader = true)
-        }
-    }
-
     fun dismissLoader() {
         _isLoading.update { state ->
             state.copy(isLoader = false)

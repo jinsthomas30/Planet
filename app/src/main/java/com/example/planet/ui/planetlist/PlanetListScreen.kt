@@ -41,9 +41,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.planet.NavigationItem
 import com.example.planet.R
-import com.example.planet.ui.components.ConnectivityStatus
 import com.example.planet.ui.components.DialogView
 import com.example.planet.ui.components.IndeterminateCircularIndicator
+import com.example.planet.ui.components.connectivityStatus
 import com.example.planet.ui.planetlist.data.PlanetEntity
 import com.example.planet.ui.planetlist.viewModel.PlanetListViewModel
 
@@ -100,7 +100,7 @@ fun MainScreen(navController: NavHostController) {
         val dialogState by planetListViewModel.dialogState.collectAsState()
         val loaderState by planetListViewModel.isLoading.collectAsState()
         val planets by planetListViewModel.planetList.collectAsState()
-        if(ConnectivityStatus()){
+        if(connectivityStatus()){
             LaunchedEffect(Unit) {
                 planetListViewModel.fetchPlanetList()
             }

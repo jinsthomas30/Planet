@@ -39,7 +39,7 @@ class PlanetListViewModel @Inject constructor(
     fun fetchPlanetList() {
         viewModelScope.launch(Dispatchers.Default) {
             try {
-                val job = repository.planetList().let {
+                 repository.planetList().let {
                     if (it.code() == API_RESULT_OK) {
                         if (it.body()?.message == MESSAGE_OK) {
                             it.body()?.results?.let { it1 -> planetDbRepository.insertPlanetList(it1) }
