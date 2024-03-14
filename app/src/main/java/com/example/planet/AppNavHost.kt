@@ -64,10 +64,8 @@ fun AppNavHost(
                 }
             },
         ) { backStackEntry ->
-            val mPlanetDetailsViewModel = hiltViewModel<PlanetDetailsViewModel>()
             PlanetDetailsScreen(navController,
-                backStackEntry.arguments?.getString("Id") ?: "",mPlanetDetailsViewModel
-            )
+                backStackEntry.arguments?.getString("Id") ?: "")
         }
     }
 }

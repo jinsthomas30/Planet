@@ -8,12 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,6 +17,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -30,39 +25,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.planet.R
-import com.example.planet.ui.planetdetails.data.MyDialog
+import com.example.planet.network.ConnectionState
+import com.example.planet.ui.components.ConnectivityStatus
+import com.example.planet.ui.components.DialogView
+import com.example.planet.ui.components.IndeterminateCircularIndicator
+import com.example.planet.ui.planetdetails.data.PlanetDtEntity
 import com.example.planet.ui.planetdetails.viewModel.PlanetDetailsViewModel
 
 
 @Composable
 fun PlanetDetailsScreen(
     navController: NavHostController,
-    id: String,
-    mPlanetDetailsViewModel: PlanetDetailsViewModel
+    id: String
 ) {
-    mPlanetDetailsViewModel.fetchPlanetDt(id)
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        TopAppBar(navController, mPlanetDetailsViewModel)
-        IndeterminateCircularIndicator(mPlanetDetailsViewModel)
-        val dialogState by mPlanetDetailsViewModel.openDialog.collectAsState()
-        DialogView(
-            dialogState = dialogState,
-            onDismiss = mPlanetDetailsViewModel::onDismiss, navController)
+        DetailsPage(navController,id)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBar(navController: NavHostController, mPlanetDetailsViewModel: PlanetDetailsViewModel) {
+fun DetailsPage(navController: NavHostController,id: String) {
     Scaffold(
         topBar = {
             androidx.compose.material3.TopAppBar(
@@ -90,202 +81,76 @@ fun TopAppBar(navController: NavHostController, mPlanetDetailsViewModel: PlanetD
             )
         },
     ) { innerPadding ->
-        DetailsContent(innerPadding, mPlanetDetailsViewModel)
+        val planetDetailsViewModel: PlanetDetailsViewModel = hiltViewModel()
+        val planetDetails by planetDetailsViewModel.planetDetails.collectAsState()
+        val dialogState by planetDetailsViewModel.dialogState.collectAsState()
+        val loaderState by planetDetailsViewModel.isLoading.collectAsState()
+        if(ConnectivityStatus()){
+            LaunchedEffect(Unit) {
+                planetDetailsViewModel.fetchPlanetDt(id)
+            }
+        }else{
+            LaunchedEffect(Unit) {
+                planetDetailsViewModel.getPlanetDtFromDb(id)
+            }
+        }
+
+        DialogView(
+            dialogState = dialogState,
+            onDismiss = { planetDetailsViewModel.dismissDialog() }
+        )
+        DetailsContent(innerPadding,planetDetails)
+        IndeterminateCircularIndicator(loaderState)
     }
 
 }
 
 @Composable
-fun DetailsContent(innerPadding: PaddingValues, mPlanetDetailsViewModel: PlanetDetailsViewModel) {
-    val planetDetails by mPlanetDetailsViewModel.planetDetails.collectAsState()
+fun DetailsContent(innerPadding: PaddingValues,planetDetails: PlanetDtEntity?) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row {
-                Text(
-                    text = planetDetails?.name.toString(),
-                    fontSize = 24.sp,
-                    fontStyle = FontStyle.Italic
-                )
-            }
+        planetDetails?.let { details ->
             Column(
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState())
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                ) {
-                    Row {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = stringResource(R.string.diameter)
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = planetDetails?.diameter.toString()
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                ) {
-                    Row {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = stringResource(R.string.rotation_period)
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = planetDetails?.rotation_period.toString()
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                ) {
-                    Row {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = stringResource(R.string.orbital_period)
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = planetDetails?.orbital_period.toString()
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                ) {
-                    Row {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = stringResource(R.string.gravity)
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = planetDetails?.gravity.toString()
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                ) {
-                    Row {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = stringResource(R.string.population)
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = planetDetails?.population.toString()
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                ) {
-                    Row {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = stringResource(R.string.climate)
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = planetDetails?.climate.toString()
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                ) {
-                    Row {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = stringResource(R.string.terrain)
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = planetDetails?.terrain.toString()
-                        )
-                    }
-                }
-
-                Column(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                ) {
-                    Row {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = stringResource(R.string.surface_water)
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = planetDetails?.surface_water.toString()
-                        )
-                    }
-                }
-
-
+                TextRow(label = "Name", value = details.name ?: "")
+                TextRow(label = stringResource(id = R.string.diameter), value = details.diameter ?: "")
+                TextRow(label = stringResource(id = R.string.rotation_period), value = details.rotation_period ?: "")
+                TextRow(label = stringResource(id = R.string.orbital_period), value = details.orbital_period ?: "")
+                TextRow(label = stringResource(id = R.string.gravity), value = details.gravity ?: "")
+                TextRow(label = stringResource(id = R.string.population), value = details.population ?: "")
+                TextRow(label = stringResource(id = R.string.climate), value = details.climate ?: "")
+                TextRow(label = stringResource(id = R.string.terrain), value = details.terrain ?: "")
+                TextRow(label = stringResource(id = R.string.surface_water), value = details.surface_water ?: "")
             }
-
         }
     }
-
 }
 
 @Composable
-fun IndeterminateCircularIndicator(viewModel: PlanetDetailsViewModel) {
-    val loading by viewModel.isLoading.collectAsState()
-    if (!loading) return
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+fun TextRow(label: String, value: String) {
+    Column(
+        modifier = Modifier.padding(top = 16.dp)
     ) {
-        CircularProgressIndicator(
-            modifier = Modifier.width(64.dp),
-            color = MaterialTheme.colorScheme.secondary,
-            trackColor = MaterialTheme.colorScheme.surfaceVariant,
-        )
-    }
-}
-
-@Composable
-fun DialogView(
-    dialogState: MyDialog,
-    onDismiss: () -> Unit, navController: NavHostController
-) {
-    if (dialogState.showDialog) {
-        AlertDialog(
-            onDismissRequest = {  },
-            title = {
-                Text(stringResource(id = R.string.alert_msg), fontSize = 16.sp)
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        navController.popBackStack()
-                    }) {
-                    Text(stringResource(id = R.string.ok), fontSize = 16.sp)
-                }
-            }
-        )
+        Row {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = label
+            )
+            Text(
+                text = ": "
+            )
+            Text(
+                modifier = Modifier.weight(1f),
+                text = value
+            )
+        }
     }
 }

@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.example.planet.local.AppDatabase
 import com.example.planet.local.dao.PlanetDao
 import com.example.planet.network.AppApis
+import com.example.planet.resource.AndroidResourceProvider
+import com.example.planet.resource.ResourceProvider
 import com.example.planet.respository.MyApiRepository
 import com.example.planet.respository.MyApiRepositoryImplementation
 import dagger.Module
@@ -69,6 +71,12 @@ object AppModule {
     fun provideDao(appDatabase: AppDatabase) : PlanetDao{
         return appDatabase.planetDao()
     }
+
+    @Provides
+    fun provideResourceProvider(@ApplicationContext appContext: Context): ResourceProvider {
+        return AndroidResourceProvider(appContext)
+    }
+
 
 
 }
