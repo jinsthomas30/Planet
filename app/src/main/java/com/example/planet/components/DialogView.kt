@@ -1,4 +1,4 @@
-package com.example.planet.ui.components
+package com.example.planet.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button

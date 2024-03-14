@@ -30,9 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.planet.R
-import com.example.planet.ui.components.DialogView
-import com.example.planet.ui.components.IndeterminateCircularIndicator
-import com.example.planet.ui.components.connectivityStatus
+import com.example.planet.components.DialogView
+import com.example.planet.components.IndeterminateCircularIndicator
+import com.example.planet.components.connectivityStatus
 import com.example.planet.ui.planetdetails.data.PlanetDtEntity
 import com.example.planet.ui.planetdetails.viewModel.PlanetDetailsViewModel
 

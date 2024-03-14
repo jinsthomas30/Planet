@@ -1,4 +1,4 @@
-package com.example.planet.ui.components
+package com.example.planet.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

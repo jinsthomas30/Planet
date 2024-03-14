@@ -1,4 +1,4 @@
-package com.example.planet.ui.components
+package com.example.planet.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

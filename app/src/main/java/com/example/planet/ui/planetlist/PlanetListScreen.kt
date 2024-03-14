@@ -41,9 +41,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.planet.NavigationItem
 import com.example.planet.R
-import com.example.planet.ui.components.DialogView
-import com.example.planet.ui.components.IndeterminateCircularIndicator
-import com.example.planet.ui.components.connectivityStatus
+import com.example.planet.components.DialogView
+import com.example.planet.components.IndeterminateCircularIndicator
+import com.example.planet.components.connectivityStatus
 import com.example.planet.ui.planetlist.data.PlanetEntity
 import com.example.planet.ui.planetlist.viewModel.PlanetListViewModel
 

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,9 +25,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Splash(navController: NavHostController,modifier: Modifier) {
-    val coroutineScope = rememberCoroutineScope()
     SplashScreenView(modifier)
-    coroutineScope.launch {
+    LaunchedEffect(Unit) {
         delay(3000)
         navController.navigate(NavigationItem.PLANT_LIST.route){
             popUpTo(NavigationItem.PLANT_LIST.route) {
