@@ -12,13 +12,12 @@ class MyApiRepositoryImplementation(
         TODO("Not yet implemented")
     }
 
-    override suspend fun planetList(): Response<PlanetResponse> {
+    override suspend fun fetchPlanetList(): Response<PlanetResponse> {
         return api.fetchPlanetList()
     }
 
-    override suspend fun planetDetails(uid: String): Response<PlanetDetailsResponse> {
+    override suspend fun fetchPlanetDetails(uid: String): Response<PlanetDetailsResponse> {
         return api.fetchPlanetDetails(uid)
     }
-
 
 }

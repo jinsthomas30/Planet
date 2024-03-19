@@ -32,86 +32,141 @@ import androidx.navigation.NavHostController
 import com.example.planet.R
 import com.example.planet.components.DialogView
 import com.example.planet.components.IndeterminateCircularIndicator
-import com.example.planet.components.connectivityStatus
 import com.example.planet.ui.planetdetails.data.PlanetDtEntity
 import com.example.planet.ui.planetdetails.viewModel.PlanetDetailsViewModel
 
 
+/**
+ * Composable function for displaying the screen for viewing planet details.
+ *
+ * @param navController The NavHostController used for navigation.
+ * @param id The ID of the planet to display details for.
+ */
 @Composable
 fun PlanetDetailsScreen(
     navController: NavHostController,
     id: String
 ) {
+    // Surface to contain the details page
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        DetailsPage(navController,id)
+        // Display the details page
+        DetailsPage(navController, id)
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Composable function for displaying the details page.
+ *
+ * @param navController The NavHostController used for navigation.
+ * @param id The ID of the planet to display details for.
+ */
 @Composable
-fun DetailsPage(navController: NavHostController,id: String) {
+fun DetailsPage(navController: NavHostController, id: String) {
+    // Scaffold to provide basic layout structure
     Scaffold(
         topBar = {
-            androidx.compose.material3.TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                ),
-                title = {
-                    Text(
-                        stringResource(R.string.planet_list),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.baseline_arrow_back_24),
-                            contentDescription = "back arrow",
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                },
-            )
+            // Top app bar with title and back button
+            TopAppBar(navController = navController)
         },
     ) { innerPadding ->
+        // ViewModel initialization
         val planetDetailsViewModel: PlanetDetailsViewModel = hiltViewModel()
+        // Collect states from the ViewModel
         val planetDetails by planetDetailsViewModel.planetDetails.collectAsState()
         val dialogState by planetDetailsViewModel.dialogState.collectAsState()
         val loaderState by planetDetailsViewModel.isLoading.collectAsState()
-        if(connectivityStatus()){
-            LaunchedEffect(Unit) {
-                planetDetailsViewModel.fetchPlanetDt(id)
-            }
-        }else{
-            LaunchedEffect(Unit) {
-                planetDetailsViewModel.getPlanetDtFromDb(id)
-            }
+
+        // Fetch planet details when the screen initializes
+        LaunchedEffect(Unit) {
+            planetDetailsViewModel.fetchPlanetDetails(id)
         }
 
+        // Display dialog if needed
         DialogView(
             dialogState = dialogState,
             onDismiss = { planetDetailsViewModel.dismissDialog() }
         )
-        DetailsContent(innerPadding,planetDetails)
+
+        // Display planet details content
+        DetailsContent(innerPadding, planetDetails)
+
+        // Display loading indicator if loading
         IndeterminateCircularIndicator(loaderState)
     }
 
 }
 
+/**
+ * Composable function to display the top app bar.
+ *
+ * @param navController The NavHostController used for navigation.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailsContent(innerPadding: PaddingValues,planetDetails: PlanetDtEntity?) {
+fun TopAppBar(navController: NavHostController) {
+    androidx.compose.material3.TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+        ),
+        title = {
+            TitleText()
+        },
+        navigationIcon = {
+            BackButton(navController = navController)
+        },
+    )
+}
+
+/**
+ * Composable function to display the title text in the top app bar.
+ */
+@Composable
+fun TitleText() {
+    Text(
+        stringResource(R.string.planet_list),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        color = MaterialTheme.colorScheme.onPrimary
+    )
+}
+
+/**
+ * Composable function to display the back button in the top app bar.
+ *
+ * @param navController The NavHostController used for navigation.
+ */
+@Composable
+fun BackButton(navController: NavHostController) {
+    IconButton(onClick = { navController.popBackStack() }) {
+        Icon(
+            imageVector = ImageVector.vectorResource(R.drawable.baseline_arrow_back_24),
+            contentDescription = "back arrow",
+            tint = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}
+
+/**
+ * Composable function for displaying the content of the planet details screen.
+ *
+ * @param innerPadding Inner padding applied by the parent composable.
+ * @param planetDetails The details of the planet to display.
+ */
+@Composable
+fun DetailsContent(innerPadding: PaddingValues, planetDetails: PlanetDtEntity?) {
+    // Container box for details content
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
     ) {
+        // Check if planet details are available
         planetDetails?.let { details ->
+            // Display planet details in a column layout
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -119,33 +174,67 @@ fun DetailsContent(innerPadding: PaddingValues,planetDetails: PlanetDtEntity?) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                // Display each detail row
                 TextRow(label = "Name", value = details.name ?: "")
-                TextRow(label = stringResource(id = R.string.diameter), value = details.diameter ?: "")
-                TextRow(label = stringResource(id = R.string.rotation_period), value = details.rotation_period ?: "")
-                TextRow(label = stringResource(id = R.string.orbital_period), value = details.orbital_period ?: "")
-                TextRow(label = stringResource(id = R.string.gravity), value = details.gravity ?: "")
-                TextRow(label = stringResource(id = R.string.population), value = details.population ?: "")
-                TextRow(label = stringResource(id = R.string.climate), value = details.climate ?: "")
-                TextRow(label = stringResource(id = R.string.terrain), value = details.terrain ?: "")
-                TextRow(label = stringResource(id = R.string.surface_water), value = details.surface_water ?: "")
+                TextRow(
+                    label = stringResource(id = R.string.diameter),
+                    value = details.diameter ?: ""
+                )
+                TextRow(
+                    label = stringResource(id = R.string.rotation_period),
+                    value = details.rotation_period ?: ""
+                )
+                TextRow(
+                    label = stringResource(id = R.string.orbital_period),
+                    value = details.orbital_period ?: ""
+                )
+                TextRow(
+                    label = stringResource(id = R.string.gravity),
+                    value = details.gravity ?: ""
+                )
+                TextRow(
+                    label = stringResource(id = R.string.population),
+                    value = details.population ?: ""
+                )
+                TextRow(
+                    label = stringResource(id = R.string.climate),
+                    value = details.climate ?: ""
+                )
+                TextRow(
+                    label = stringResource(id = R.string.terrain),
+                    value = details.terrain ?: ""
+                )
+                TextRow(
+                    label = stringResource(id = R.string.surface_water),
+                    value = details.surface_water ?: ""
+                )
             }
         }
     }
 }
 
+/**
+ * Composable function for displaying a row of text.
+ *
+ * @param label The label for the text row.
+ * @param value The value to display in the text row.
+ */
 @Composable
 fun TextRow(label: String, value: String) {
+    // Column layout for text row
     Column(
         modifier = Modifier.padding(top = 16.dp)
     ) {
+        // Row layout for label and value
         Row {
+            // Label text
             Text(
                 modifier = Modifier.weight(1f),
                 text = label
             )
-            Text(
-                text = ": "
-            )
+            // Separator
+            Text(text = ": ")
+            // Value text
             Text(
                 modifier = Modifier.weight(1f),
                 text = value

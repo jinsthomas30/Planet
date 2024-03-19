@@ -6,7 +6,7 @@ import retrofit2.Response
 
 interface MyApiRepository {
     suspend fun doNetworkCal(): Response<String>
-    suspend fun planetList(): Response<PlanetResponse>
-    suspend fun planetDetails(uid:String): Response<PlanetDetailsResponse>
+    suspend fun fetchPlanetList(): Response<PlanetResponse>
+    suspend fun fetchPlanetDetails(uid:String): Response<PlanetDetailsResponse>
 
 }

@@ -3,7 +3,6 @@ package com.example.planet.ui.planetlist.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.planet.R
-import com.example.planet.common.Constants.Companion.API_RESULT_OK
 import com.example.planet.common.Constants.Companion.MESSAGE_OK
 import com.example.planet.resource.ResourceProvider
 import com.example.planet.respository.MyApiRepository
@@ -25,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlanetListViewModel @Inject constructor(
-    private val myApiRepository: MyApiRepository,
+    private val myApiRepo: MyApiRepository,
     private val planetDbRepository: PlanetDbRepository,
     private val resourceProvider: ResourceProvider
 ) : ViewModel() {
@@ -52,7 +51,7 @@ class PlanetListViewModel @Inject constructor(
                     dismissLoader()
                     _planetList.emit(data)
                 } else {
-                    val planetListResponse = myApiRepository.planetList()
+                    val planetListResponse = myApiRepo.fetchPlanetList()
                     handleApiResponse(planetListResponse)
                 }
             } catch (e: IOException) {

@@ -14,11 +14,11 @@ class PlanetDbRepository @Inject constructor (private val planetDao: PlanetDao) 
         return planetDao.insertPlanetList(planet)
     }
 
-    suspend fun getPlanetDt(uid:String): PlanetDtEntity {
+    suspend fun getPlanetDetailsByUid(uid:String): PlanetDtEntity {
         return planetDao.getPlanetDt(uid)
     }
 
-    suspend fun insertPlanetDt(planetDt: PlanetDtEntity) {
+    suspend fun insertPlanetDetailsByUid(planetDt: PlanetDtEntity) {
         return planetDao.insertPlanetDt(planetDt)
     }
 
