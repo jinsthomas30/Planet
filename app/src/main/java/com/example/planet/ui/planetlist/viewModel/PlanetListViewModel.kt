@@ -67,7 +67,7 @@ class PlanetListViewModel @Inject constructor(
         if (response?.isSuccessful == true) {
             val responseBody = response.body()
             if (responseBody != null && responseBody.message == MESSAGE_OK) {
-                responseBody.results?.let { planets ->
+                responseBody.results.let { planets ->
                     viewModelScope.launch {
                         _planetList.emit(planets)
                         planetDbRepository.insertPlanetList(planets)
