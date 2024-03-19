@@ -2,16 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ExampleInstrumentedTest">
+      <entry key="PlanetListScreenTest">
         <State />
       </entry>
-      <entry key="PlanetDetailsViewModelTest">
-        <State />
-      </entry>
-      <entry key="PlanetListViewModelTest">
+      <entry key="SplashTest">
         <State />
       </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="planetDetailsScreen()">
+        <State />
+      </entry>
+      <entry key="testPlanetListScreenDisplayed()">
         <State />
       </entry>
     </value>

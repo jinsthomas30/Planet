@@ -1,6 +1,6 @@
 package com.example.planet.network
 
 sealed class ConnectionState {
-    object Available : ConnectionState()
-    object Unavailable : ConnectionState()
+    data object Available : ConnectionState()
+    data object Unavailable : ConnectionState()
 }

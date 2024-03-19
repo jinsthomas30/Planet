@@ -58,6 +58,12 @@ android {
 }
 
 dependencies {
+    implementation("androidx.navigation:navigation-testing:2.7.7")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     val navVersion = "2.7.7"
     val retrofit = "2.9.0"
     val loggingInterceptor = "4.5.0"

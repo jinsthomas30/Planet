@@ -22,7 +22,7 @@ data class PlanetResponse(
 
 @Entity(tableName = "planetEntity")
 data class PlanetEntity(
-    @PrimaryKey()
+    @PrimaryKey
     @SerializedName("uid")
     val uid: String,
     @SerializedName("name")
