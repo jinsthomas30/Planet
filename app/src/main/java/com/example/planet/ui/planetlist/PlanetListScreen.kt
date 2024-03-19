@@ -10,24 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -43,7 +27,6 @@ import com.example.planet.NavigationItem
 import com.example.planet.R
 import com.example.planet.components.DialogView
 import com.example.planet.components.IndeterminateCircularIndicator
-import com.example.planet.components.connectivityStatus
 import com.example.planet.ui.planetlist.data.PlanetEntity
 import com.example.planet.ui.planetlist.viewModel.PlanetListViewModel
 
@@ -60,23 +43,24 @@ fun PlanetListScreen(navController: NavHostController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val backPressHandled by remember { mutableStateOf(false) }
     val activity = (LocalContext.current as? Activity)
 
+    // Handle back press
     BackHandler(enabled = !backPressHandled) {
         activity?.finish()
     }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
+            // Top app bar
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
                 title = {
+                    // Title text
                     Text(
                         stringResource(R.string.planet_list),
                         maxLines = 1,
@@ -84,6 +68,7 @@ fun MainScreen(navController: NavHostController) {
                     )
                 },
                 navigationIcon = {
+                    // Back button
                     IconButton(onClick = { activity?.finish() }) {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.baseline_arrow_back_24),
@@ -93,60 +78,66 @@ fun MainScreen(navController: NavHostController) {
                     }
                 },
             )
-
         },
     ) { innerPadding ->
+        // ViewModel initialization
         val planetListViewModel: PlanetListViewModel = hiltViewModel()
+
+        // Collect states from the ViewModel
         val dialogState by planetListViewModel.dialogState.collectAsState()
         val loaderState by planetListViewModel.isLoading.collectAsState()
         val planets by planetListViewModel.planetList.collectAsState()
-        if(connectivityStatus()){
-            LaunchedEffect(Unit) {
-                planetListViewModel.fetchPlanetList()
-            }
-        }else{
-            LaunchedEffect(Unit) {
-                planetListViewModel.fetchDataFromDb()
-            }
+
+        // Fetch planet list when screen initializes
+        LaunchedEffect(Unit) {
+            planetListViewModel.fetchPlanetList()
         }
 
+        // Display dialog if needed
         DialogView(
             dialogState = dialogState,
             onDismiss = { planetListViewModel.dismissDialog() }
         )
-        LazyColumnInitialize(innerPadding, planets) { itemClick ->
-            navController.navigate(NavigationItem.DETAILS.route + "/${itemClick.uid}") {
-                popUpTo(NavigationItem.PLANT_LIST.route)
-            }
-        }
+
+        // LazyColumn for displaying planet list
+        PlanetListContent(innerPadding, planets, navController)
+
+        // Display loading indicator if loading
         IndeterminateCircularIndicator(loaderState)
     }
-
 }
 
 @Composable
-fun LazyColumnInitialize(
+fun PlanetListContent(
     innerPadding: PaddingValues,
     planets: List<PlanetEntity>,
-    onItemClick: (PlanetEntity) -> Unit
+    navController: NavHostController
 ) {
+    // LazyColumn to display a list of planets
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
         contentPadding = innerPadding,
     ) {
-        items(planets) { planetEntity: PlanetEntity ->
-            PlanetItem(onItemClick, planetEntity)
-            if (planetEntity == planets.last()) Spacer(modifier = Modifier.padding(bottom = 8.dp))
+        items(planets) { planet ->
+            // Planet item
+            PlanetListItem(planet) { clickedPlanet ->
+                navController.navigate(NavigationItem.DETAILS.route + "/${clickedPlanet.uid}") {
+                    popUpTo(NavigationItem.PLANT_LIST.route)
+                }
+            }
+            // Add spacer if it's the last item
+            if (planet == planets.last()) Spacer(modifier = Modifier.padding(bottom = 8.dp))
         }
     }
 }
 
 @Composable
-fun PlanetItem(
-    onItemClick: (PlanetEntity) -> Unit,
-    planetItem: PlanetEntity
+fun PlanetListItem(
+    planet: PlanetEntity,
+    onItemClick: (PlanetEntity) -> Unit
 ) {
+    // Display a planet item as an elevated card
     ElevatedCard(
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -156,13 +147,12 @@ fun PlanetItem(
             .padding(top = 8.dp, start = 8.dp, end = 8.dp)
             .fillMaxSize(),
         onClick = {
-            onItemClick(planetItem)
+            onItemClick(planet)
         }
     ) {
+        // Row to display planet name
         Row(modifier = Modifier.padding(16.dp)) {
-            Text(text = planetItem.name)
+            Text(text = planet.name)
         }
     }
-
 }
-
