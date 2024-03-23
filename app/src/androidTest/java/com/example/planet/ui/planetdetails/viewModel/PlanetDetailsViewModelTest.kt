@@ -25,7 +25,7 @@ import java.io.IOException
 class PlanetDetailsViewModelTest {
 
     @Test
-    fun isLoading_initially() = runBlockingTest {
+    fun isLoading_initially() = runTest {
         // Mock dependencies
         val myApiRepo: MyApiRepository = mockk()
         val planetDbRepository: PlanetDbRepository = mockk()
@@ -53,7 +53,7 @@ class PlanetDetailsViewModelTest {
     }
 
     @Test
-    fun getDialogState_initially() = runBlockingTest {
+    fun getDialogState_initially() = runTest {
         // Mock dependencies
         val myApiRepo: MyApiRepository = mockk()
         val planetDbRepository: PlanetDbRepository = mockk()
@@ -94,7 +94,7 @@ class PlanetDetailsViewModelTest {
     }
 
     @Test
-    fun fetchPlanetDetails_network_error() = runBlockingTest {
+    fun fetchPlanetDetails_network_error() = runTest {
         // Mock dependencies
         val myApiRepo: MyApiRepository = mockk()
         val planetDbRepository: PlanetDbRepository = mockk()
@@ -117,7 +117,7 @@ class PlanetDetailsViewModelTest {
     }
 
     @Test
-    fun fetchPlanetDetails_unknown_error() = runBlockingTest {
+    fun fetchPlanetDetails_unknown_error() = runTest {
         // Mock dependencies
         val myApiRepo: MyApiRepository = mockk()
         val planetDbRepository: PlanetDbRepository = mockk()
@@ -140,7 +140,7 @@ class PlanetDetailsViewModelTest {
     }
 
     @Test
-    fun fetchPlanetDetails_API_error() = runBlockingTest {
+    fun fetchPlanetDetails_API_error() = runTest {
         // Mock dependencies
         val myApiRepo: MyApiRepository = mockk()
         val planetDbRepository: PlanetDbRepository = mockk()
