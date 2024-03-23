@@ -4,17 +4,13 @@ import com.example.planet.respository.MyApiRepository
 import com.example.planet.respository.PlanetDbRepository
 import com.example.planet.state.DialogState
 import com.example.planet.ui.planetdetails.data.PlanetDetailsResponse
-import com.example.planet.ui.planetdetails.data.PlanetDtEntity
 import com.example.planet.ui.planetdetails.viewModel.PlanetDetailsViewModel
-import com.example.planet.ui.planetlist.data.PlanetEntity
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
