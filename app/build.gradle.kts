@@ -86,6 +86,7 @@ dependencies {
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:$navVersion")
+    implementation("androidx.navigation:navigation-testing:2.7.7")
 
     // Retrofit
     implementation ("com.squareup.retrofit2:retrofit:$retrofit")
@@ -108,6 +109,8 @@ dependencies {
 
     //Unit test cases
     androidTestImplementation ("io.mockk:mockk-android:$mockAndroid")
+    testImplementation ("io.mockk:mockk:$mockAndroid")
+
 
 
 }

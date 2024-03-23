@@ -16,7 +16,7 @@ interface PlanetDao {
     suspend fun insertPlanetList(planet: List<PlanetEntity>)
 
     @Query("SELECT * FROM planetDtEntity where uid =:uid")
-    suspend fun getPlanetDt(uid:String): PlanetDtEntity
+    suspend fun getPlanetDt(uid:String): PlanetDtEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPlanetDt(planetDtEntity: PlanetDtEntity)

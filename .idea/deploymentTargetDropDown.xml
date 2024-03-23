@@ -2,19 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PlanetListScreenTest">
-        <State />
-      </entry>
-      <entry key="SplashTest">
+      <entry key="PlanetListViewModelTest">
         <State />
       </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="planetDetailsScreen()">
+      <entry key="fetchPlanetDetails_success()">
         <State />
       </entry>
-      <entry key="testPlanetListScreenDisplayed()">
+      <entry key="fetchPlanetList_success()">
+        <State />
+      </entry>
+      <entry key="getDialogState_initially()">
+        <State />
+      </entry>
+      <entry key="isLoading_initially()">
         <State />
       </entry>
     </value>
