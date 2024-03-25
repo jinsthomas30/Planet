@@ -127,7 +127,7 @@ fun TopAppBar(navController: NavHostController) {
 @Composable
 fun TitleText() {
     Text(
-        stringResource(R.string.planet_list),
+        stringResource(R.string.planet_details_page),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
         color = MaterialTheme.colorScheme.onPrimary

@@ -22,11 +22,11 @@ import com.example.planet.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun Splash(navController: NavHostController,modifier: Modifier) {
+fun Splash(navController: NavHostController, modifier: Modifier) {
     SplashScreenView(modifier)
     LaunchedEffect(Unit) {
         delay(3000)
-        navController.navigate(NavigationItem.PLANT_LIST.route){
+        navController.navigate(NavigationItem.PLANT_LIST.route) {
             popUpTo(NavigationItem.PLANT_LIST.route) {
                 inclusive = true
             }
@@ -34,8 +34,9 @@ fun Splash(navController: NavHostController,modifier: Modifier) {
     }
 
 }
+
 @Composable
-fun SplashScreenView(modifier: Modifier){
+fun SplashScreenView(modifier: Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -45,7 +46,7 @@ fun SplashScreenView(modifier: Modifier){
     ) {
         Image(
             painter = painterResource(id = R.drawable.planet_icon),
-            contentDescription = null,
+            contentDescription = "Planet Icon",
             modifier = Modifier.size(200.dp),
         )
         Text(

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Planet</string>
     <string name="planet_list">Planet List</string>
+    <string name="planet_details_page">Planet Details Page</string>
     <string name="network_connection_error">Network Connection Error</string>
     <string name="network_error_message">This page require network connection</string>
     <string name="Retry">Retry</string>
-    <string name="planet_details_page">Planet Details Page</string>
     <string name="diameter">Diameter</string>
     <string name="rotation_period">Rotation period</string>
     <string name="orbital_period">Orbital period</string>
