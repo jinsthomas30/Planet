@@ -31,7 +31,7 @@ class SplashKtTest {
             runBlocking {
                 delay(3000)
                 // Navigate to the Planet Listing page after the delay
-                navController?.navigate(NavigationItem.PLANT_LIST.route) {
+                navController.navigate(NavigationItem.PLANT_LIST.route) {
                     // Specify popUpTo to clear the back stack
                     popUpTo(NavigationItem.PLANT_LIST.route) {
                         inclusive = true
