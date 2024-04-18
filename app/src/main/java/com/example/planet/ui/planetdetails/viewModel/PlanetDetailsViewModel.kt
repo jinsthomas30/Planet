@@ -44,7 +44,7 @@ class PlanetDetailsViewModel @Inject constructor(
 
     // Function to fetch planet details by UID
     fun fetchPlanetDetails(uid: String) {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 // Checking if cache is available
                 val cachedData = planetDbRepository.getPlanetDetailsByUid(uid)

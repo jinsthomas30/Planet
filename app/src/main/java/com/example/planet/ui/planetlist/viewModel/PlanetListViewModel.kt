@@ -43,7 +43,7 @@ class PlanetListViewModel @Inject constructor(
 
     // Function to fetch planet list
     fun fetchPlanetList() {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 // Checking if cache is available
                 val data = planetDbRepository.getAllPlanet()
