@@ -135,11 +135,11 @@ fun TitleText() {
 /**
  * Composable function to display the back button in the top app bar.
  *
- * @param navController The NavHostController used for navigation.
+ * @param onBackPressed used for back navigation.
  */
 @Composable
 fun BackButton(onBackPressed: () -> Unit) {
-    IconButton(onClick = { onBackPressed }) {
+    IconButton(onClick = { onBackPressed() }) {
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.baseline_arrow_back_24),
             contentDescription = "back arrow",

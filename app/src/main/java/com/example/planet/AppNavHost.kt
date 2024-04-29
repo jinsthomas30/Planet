@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.planet.planetdetails.presentation.planetDtGraph
 import com.example.planet.planetlist.prensentation.planetListGraph
 import com.example.planet.splash.presentation.Splash
+import com.example.planet.splash.presentation.splashGraph
 
 @Composable
 fun AppNavHost(
@@ -20,9 +21,7 @@ fun AppNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(NavigationItem.SPLASH.route) {
-            Splash(navController, modifier = modifier)
-        }
+        splashGraph(navController,modifier)
         planetListGraph(navController)
         planetDtGraph(navController)
 

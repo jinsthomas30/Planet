@@ -23,7 +23,6 @@ import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
-@Suppress("SENSELESS_COMPARISON")
 @HiltViewModel
 class PlanetDetailsViewModel @Inject constructor(
     private val remotePlanetDtUseCase: RemotePlanetDtUseCase,

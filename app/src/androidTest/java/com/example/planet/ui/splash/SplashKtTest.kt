@@ -27,11 +27,12 @@ class SplashKtTest {
         composeTestRule.activity.setContent {
             // Create a NavController
             val navController = rememberNavController()
-            Splash(navController = navController, modifier = Modifier)
+            Splash(onNavigateToPlanetList = {}, modifier = Modifier)
 
             // Set delay 3000 milliseconds to simulate splash screen
             runBlocking {
                 delay(3000)
+
                 // Navigate to the Planet Listing page after the delay
                 navController.navigate(NavigationItem.PLANT_LIST.route) {
                     // Specify popUpTo to clear the back stack

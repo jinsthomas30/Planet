@@ -20,26 +20,14 @@ fun NavGraphBuilder.planetDtGraph(navController: NavHostController) {
             }
         ),
         enterTransition = {
-            when (initialState.destination.route) {
-                "details" ->
-                    slideIntoContainer(
-                        AnimatedContentTransitionScope.SlideDirection.Left,
-                        animationSpec = tween(200)
-                    )
-
-                else -> null
-            }
+            return@composable slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Start, tween(700)
+            )
         },
-        exitTransition = {
-            when (targetState.destination.route) {
-                "details" ->
-                    slideOutOfContainer(
-                        AnimatedContentTransitionScope.SlideDirection.Left,
-                        animationSpec = tween(200)
-                    )
-
-                else -> null
-            }
+        popExitTransition = {
+            return@composable slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.End, tween(700)
+            )
         },
     ) { backStackEntry ->
         PlanetDetailsScreen(
