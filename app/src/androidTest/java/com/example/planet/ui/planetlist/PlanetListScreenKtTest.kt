@@ -9,7 +9,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.planet.MainActivity
 import com.example.planet.NavigationItem
-import com.example.planet.ui.planetlist.data.PlanetEntity
+import com.example.planet.planetlist.prensentation.MainScreen
+import com.example.planet.planetlist.prensentation.PlanetListContent
+import com.example.planet.planetlist.prensentation.PlanetListItem
+import com.example.planet.planetlist.data.PlanetEntity
 import junit.framework.TestCase.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -25,9 +28,7 @@ class PlanetListScreenKtTest {
     fun planetListScreen() {
         // Set content to PlanetListScreen
         composeTestRule.activity.setContent {
-            // Create a NavController
-            val navController = rememberNavController()
-            MainScreen(navController = navController)
+            MainScreen(onItemSelect = {})
         }
 
         // Verify if the planet list title is displayed
@@ -38,8 +39,7 @@ class PlanetListScreenKtTest {
     fun mainScreen() {
         // Set content to MainScreen
         composeTestRule.activity.setContent {
-            val navController = rememberNavController()
-            MainScreen(navController)
+            MainScreen(onItemSelect = {})
         }
 
         // Verify if the back arrow button is displayed
@@ -61,7 +61,7 @@ class PlanetListScreenKtTest {
             PlanetListContent(
                 innerPadding = PaddingValues(0.dp),
                 planets = planets,
-                navController = navController
+                onItemSelect = {}
             )
 
                 // Verify if the planets are displayed

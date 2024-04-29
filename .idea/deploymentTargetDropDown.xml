@@ -2,22 +2,10 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PlanetDetailsScreenKtTest">
-        <State />
-      </entry>
       <entry key="PlanetDetailsScreenKtTest (1)">
         <State />
       </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="planetDetailsScreen()">
-        <State />
-      </entry>
-      <entry key="titleText()">
-        <State />
-      </entry>
-      <entry key="topAppBar()">
         <State />
       </entry>
     </value>

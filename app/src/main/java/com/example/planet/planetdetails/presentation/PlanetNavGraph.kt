@@ -1,0 +1,50 @@
+package com.example.planet.planetdetails.presentation
+
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.example.planet.NavigationItem
+
+fun NavGraphBuilder.planetDtGraph(navController: NavHostController) {
+    // Home Page
+    composable(
+        route = NavigationItem.DETAILS.route + "/{Id}",
+        arguments = listOf(
+            navArgument("Id") {
+                type = NavType.StringType
+                defaultValue = "Default"
+            }
+        ),
+        enterTransition = {
+            when (initialState.destination.route) {
+                "details" ->
+                    slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        animationSpec = tween(200)
+                    )
+
+                else -> null
+            }
+        },
+        exitTransition = {
+            when (targetState.destination.route) {
+                "details" ->
+                    slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        animationSpec = tween(200)
+                    )
+
+                else -> null
+            }
+        },
+    ) { backStackEntry ->
+        PlanetDetailsScreen(
+            onBackPressed = { navController.popBackStack() },
+            backStackEntry.arguments?.getString("Id") ?: ""
+        )
+    }
+}

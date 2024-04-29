@@ -8,6 +8,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
 import com.example.planet.MainActivity
 import com.example.planet.NavigationItem
+import com.example.planet.splash.presentation.Splash
+import com.example.planet.splash.presentation.SplashScreenView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule

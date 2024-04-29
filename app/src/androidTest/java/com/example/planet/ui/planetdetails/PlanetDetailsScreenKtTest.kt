@@ -5,9 +5,15 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
 import com.example.planet.MainActivity
-import com.example.planet.ui.planetdetails.data.PlanetDtEntity
+import com.example.planet.planetdetails.presentation.BackButton
+import com.example.planet.planetdetails.presentation.DetailsContent
+import com.example.planet.planetdetails.presentation.DetailsPage
+import com.example.planet.planetdetails.presentation.PlanetDetailsScreen
+import com.example.planet.planetdetails.presentation.TextRow
+import com.example.planet.planetdetails.presentation.TitleText
+import com.example.planet.planetdetails.presentation.TopAppBar
+import com.example.planet.planetdetails.data.PlanetDtEntity
 import junit.framework.TestCase.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -23,10 +29,8 @@ class PlanetDetailsScreenKtTest {
         // Test for PlanetDetailsScreen
         // Set content to PlanetDetailsScreen
         composeTestRule.activity.setContent {
-            // Create a NavController
-            val navController = rememberNavController()
             // Render PlanetDetailsScreen
-            PlanetDetailsScreen(navController, "1")
+            PlanetDetailsScreen(onBackPressed = {}, "1")
         }
         // Verify if the planet details title is displayed
         composeTestRule.onNodeWithText("Planet Details Page").assertExists()
@@ -37,10 +41,8 @@ class PlanetDetailsScreenKtTest {
         // Test for DetailsPage
         // Set content to DetailsPage
         composeTestRule.activity.setContent {
-            // Create a NavController
-            val navController = rememberNavController()
             // Render DetailsPage
-            DetailsPage(navController, "1")
+            DetailsPage(onBackPressed = {}, "1")
         }
         // Placeholder assertion
         assertTrue(true)
@@ -51,10 +53,8 @@ class PlanetDetailsScreenKtTest {
         // Test for TopAppBar
         // Set content to TopAppBar
         composeTestRule.activity.setContent {
-            // Create a NavController
-            val navController = rememberNavController()
             // Render TopAppBar
-            TopAppBar(navController)
+            TopAppBar(onBackPressed = {})
         }
         // Verify if the planet details title is displayed in TopAppBar
         composeTestRule.onNodeWithText("Planet Details Page").assertExists()
@@ -77,10 +77,8 @@ class PlanetDetailsScreenKtTest {
         // Test for BackButton
         // Set content to BackButton
         composeTestRule.activity.setContent {
-            // Create a NavController
-            val navController = rememberNavController()
             // Render BackButton
-            BackButton(navController)
+            BackButton(onBackPressed = {})
         }
         // Verify that the back button is displayed
         composeTestRule.onNodeWithContentDescription("back arrow").assertExists()

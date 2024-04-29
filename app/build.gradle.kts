@@ -109,7 +109,7 @@ dependencies {
 
     //Unit test cases
     androidTestImplementation ("io.mockk:mockk-android:$mockAndroid")
-    testImplementation ("io.mockk:mockk:$mockAndroid")
+    testImplementation ("io.mockk:mockk:1.12.0")
 
 
 
