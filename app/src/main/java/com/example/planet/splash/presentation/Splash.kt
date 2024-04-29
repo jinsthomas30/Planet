@@ -16,13 +16,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import com.example.planet.NavigationItem
 import com.example.planet.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun Splash(onNavigateToPlanetList: ()-> Unit, modifier: Modifier) {
+fun Splash(onNavigateToPlanetList: () -> Unit, modifier: Modifier) {
     SplashScreenView(modifier)
     LaunchedEffect(Unit) {
         delay(3000)
