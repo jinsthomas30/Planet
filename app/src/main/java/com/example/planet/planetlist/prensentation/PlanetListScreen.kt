@@ -36,8 +36,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import com.example.planet.NavigationItem
 import com.example.planet.R
 import com.example.planet.common.presentation.components.DialogView
 import com.example.planet.common.presentation.components.IndeterminateCircularIndicator

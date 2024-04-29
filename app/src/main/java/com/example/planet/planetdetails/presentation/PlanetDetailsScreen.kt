@@ -37,7 +37,7 @@ import com.example.planet.planetdetails.data.PlanetDtEntity
 /**
  * Composable function for displaying the screen for viewing planet details.
  *
- * @param navController The NavHostController used for navigation.
+ * @param onBackPressed The onBackPressed used for back navigation.
  * @param id The ID of the planet to display details for.
  */
 @Composable
@@ -58,7 +58,7 @@ fun PlanetDetailsScreen(
 /**
  * Composable function for displaying the details page.
  *
- * @param navController The NavHostController used for navigation.
+ * @param onBackPressed used for back navigation.
  * @param id The ID of the planet to display details for.
  */
 @Composable
@@ -100,7 +100,7 @@ fun DetailsPage( onBackPressed: () -> Unit, id: String) {
 /**
  * Composable function to display the top app bar.
  *
- * @param navController The NavHostController used for navigation.
+ * @param onBackPressed used for back navigation.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
