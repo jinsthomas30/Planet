@@ -12,6 +12,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
@@ -103,7 +104,10 @@ class PlanetListViewModelTest {
         // Mocking the behavior of functions
         coEvery { planetListResponse.isSuccessful } returns true
         coEvery { viewModel.getPlanetListLocalUseCase(any()) } returns emptyList()
-        coEvery { viewModel.getPlanetListRemoteUsecase(any()) } returns Response.success(mockPlanetResponse)
+        coEvery { viewModel.insertPlanetListUseCase(any()) } returns listOf()
+        coEvery { viewModel.getPlanetListRemoteUsecase(any()) } returns Response.success(
+            mockPlanetResponse
+        )
 
         // Calling the function to be tested
         viewModel.fetchPlanetList()
@@ -111,11 +115,14 @@ class PlanetListViewModelTest {
         // Verifying that remote use case is called
         coVerify { viewModel.getPlanetListRemoteUsecase(any()) }
 
-        // Verifying planet list state after successful fetch
-        assertEquals(mockPlanets, viewModel.planetList.value)
+        runBlocking {
+            // Verifying planet list state after successful fetch
+            assertEquals(mockPlanets, viewModel.planetList.value)
+            // Verifying insertion use case is called
+            coVerify { viewModel.insertPlanetListUseCase(any()) }
+        }
 
-        // Verifying insertion use case is called
-        coVerify { viewModel.insertPlanetListUseCase(any()) }
+
     }
 
     @Test

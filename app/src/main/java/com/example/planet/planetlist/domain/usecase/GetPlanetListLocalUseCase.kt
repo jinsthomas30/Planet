@@ -2,7 +2,7 @@ package com.example.planet.planetlist.domain.usecase
 
 import com.example.planet.common.domain.PlanetDbRepository
 import com.example.planet.planetlist.data.PlanetEntity
-import com.vivek.githubapisample.common.domain.AsyncUsecase
+import com.example.planet.common.domain.AsyncUsecase
 import javax.inject.Inject
 
 class GetPlanetListLocalUseCase  @Inject constructor(private val repository: PlanetDbRepository) :

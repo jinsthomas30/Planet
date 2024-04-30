@@ -2,7 +2,7 @@ package com.example.planet.planetlist.domain.usecase
 
 import com.example.planet.planetlist.data.PlanetResponse
 import com.example.planet.planetlist.domain.PlanetListRepository
-import com.vivek.githubapisample.common.domain.AsyncUsecase
+import com.example.planet.common.domain.AsyncUsecase
 import retrofit2.Response
 import javax.inject.Inject
 

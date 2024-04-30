@@ -1,4 +1,4 @@
-package com.vivek.githubapisample.common.domain
+package com.example.planet.common.domain
 
 /**
  * Use cases are typically used to perform business logic or data manipulation.
