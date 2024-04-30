@@ -36,9 +36,6 @@ class PlanetListViewModelTest {
         every { mockResourceProvider.getString(R.string.ok) } returns "OK"
         every { mockResourceProvider.getString(R.string.api_error) } returns "Error occurred while processing the request. Please try again later."
 
-
-
-
         viewModel = PlanetListViewModel(
             mockGetRemoteUseCase,
             mockInsertUseCase,
@@ -101,22 +98,18 @@ class PlanetListViewModelTest {
         val mockPlanets: List<PlanetEntity> =
             listOf(PlanetEntity("1", "Earth", "www.earth/earth.jpg"))
         val mockPlanetResponse =
-            PlanetResponse("OK", "nextTestData", "PreviousTestData", mockPlanets, 1, 10)
+            PlanetResponse("ok", "nextTestData", "PreviousTestData", mockPlanets, 1, 10)
 
         // Mocking the behavior of functions
         coEvery { planetListResponse.isSuccessful } returns true
-        coEvery { planetListResponse.body() } returns mockPlanetResponse
         coEvery { viewModel.getPlanetListLocalUseCase(any()) } returns emptyList()
-        coEvery { viewModel.getPlanetListRemoteUsecase(any()) } returns planetListResponse
+        coEvery { viewModel.getPlanetListRemoteUsecase(any()) } returns Response.success(mockPlanetResponse)
 
         // Calling the function to be tested
         viewModel.fetchPlanetList()
 
         // Verifying that remote use case is called
         coVerify { viewModel.getPlanetListRemoteUsecase(any()) }
-
-        // Advancing time by 3000 milliseconds
-        advanceTimeBy(3000)
 
         // Verifying planet list state after successful fetch
         assertEquals(mockPlanets, viewModel.planetList.value)

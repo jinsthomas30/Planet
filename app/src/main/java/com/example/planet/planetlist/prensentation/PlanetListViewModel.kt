@@ -71,7 +71,7 @@ class PlanetListViewModel @Inject constructor(
             responseBody.let {
                 if (responseBody?.message == MESSAGE_OK) {
                     responseBody.results.let { planets ->
-                        viewModelScope.launch {
+                        viewModelScope.launch(Dispatchers.IO) {
                             _planetList.emit(planets)
                             insertPlanetListUseCase(InsertPlanetListUseCase.Param(planets))
                         }
