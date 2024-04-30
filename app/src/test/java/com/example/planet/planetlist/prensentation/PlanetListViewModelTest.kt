@@ -13,7 +13,6 @@ import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -135,8 +134,6 @@ class PlanetListViewModelTest {
         // Verify that remote use case is called
         coVerify { viewModel.getPlanetListRemoteUsecase(any()) }
 
-        advanceTimeBy(3000)
-
         // Verify error handling
         assertEquals(
             DialogState.Show(
@@ -145,7 +142,4 @@ class PlanetListViewModelTest {
             ), viewModel.dialogState.value
         )
     }
-
-
-    // Test dismissDialog() similarly
 }
