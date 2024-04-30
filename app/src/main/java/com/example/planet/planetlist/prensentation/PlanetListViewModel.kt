@@ -25,10 +25,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlanetListViewModel @Inject constructor(
-    private val getPlanetListRemoteUsecase: GetPlanetListRemoteUsecase,
-    private val insertPlanetListUseCase: InsertPlanetListUseCase,
-    private val getPlanetListLocalUseCase: GetPlanetListLocalUseCase,
-    private val resourceProvider: ResourceProvider
+    val getPlanetListRemoteUsecase: GetPlanetListRemoteUsecase,
+    val insertPlanetListUseCase: InsertPlanetListUseCase,
+    val getPlanetListLocalUseCase: GetPlanetListLocalUseCase,
+    val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
     // State flow for tracking loading state
@@ -68,14 +68,18 @@ class PlanetListViewModel @Inject constructor(
     private fun handleApiResponse(response: Response<PlanetResponse>?) {
         if (response?.isSuccessful == true) {
             val responseBody = response.body()
-            if (responseBody != null && responseBody.message == MESSAGE_OK) {
-                responseBody.results.let { planets ->
-                    viewModelScope.launch {
-                        _planetList.emit(planets)
-                        insertPlanetListUseCase(InsertPlanetListUseCase.Param(planets))
+            responseBody.let {
+                if (responseBody?.message == MESSAGE_OK) {
+                    responseBody.results.let { planets ->
+                        viewModelScope.launch {
+                            _planetList.emit(planets)
+                            insertPlanetListUseCase(InsertPlanetListUseCase.Param(planets))
+                        }
+                        dismissLoader()
+                        return
                     }
-                    dismissLoader()
-                    return
+                }else{
+                    handleError(resourceProvider.getString(R.string.api_error))
                 }
             }
         }
@@ -83,7 +87,7 @@ class PlanetListViewModel @Inject constructor(
     }
 
     // Function to show dialog
-    private fun showDialog(message: String, buttonText: String) {
+    fun showDialog(message: String, buttonText: String) {
         _dialogState.value = DialogState.Show(message, buttonText)
     }
 
@@ -93,7 +97,7 @@ class PlanetListViewModel @Inject constructor(
     }
 
     // Function to dismiss loader
-    private fun dismissLoader() {
+    fun dismissLoader() {
         _isLoading.update { state ->
             state.copy(isLoader = false)
         }
