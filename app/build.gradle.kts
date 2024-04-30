@@ -62,7 +62,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     val navVersion = "2.7.7"
     val retrofit = "2.9.0"
-    val loggingInterceptor = "4.5.0"
+    val loggingInterceptor = "4.12.0"
     val hiltAndroid = "2.48"
     val coroutines = "1.7.1"
     val hiltNavigationCompose = "1.2.0"
